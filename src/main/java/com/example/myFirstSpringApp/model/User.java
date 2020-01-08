@@ -5,13 +5,16 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.management.relation.Role;
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
 @Entity
 @Table(name = "users")
-public class User extends DateAudit {
+public class User extends DateAudit implements Serializable {
+    private static final long serialVersionUID = 1L;
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "user_id")
@@ -26,7 +29,7 @@ public class User extends DateAudit {
     @Column(name = "user_email", length =40, unique = true, nullable = false)
     private String email;
 
-    @Column(name = "user_password",  length = 30, nullable = false)
+    @Column(name = "user_password",  length = 90, nullable = false)
     private String password;
 
     @JsonIgnore

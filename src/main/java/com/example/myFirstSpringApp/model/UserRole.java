@@ -3,10 +3,12 @@ package com.example.myFirstSpringApp.model;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
+import java.io.Serializable;
 
 @Entity
 @Table(name = "user_roles")
-public class UserRole {
+public class UserRole implements Serializable {
+    private static final long serialVersionUID = 1L;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -40,11 +42,11 @@ public class UserRole {
         this.user_role_id = user_role_id;
     }
 
-    public User getUserId() {
+    public User getUser() {
         return user;
     }
 
-    public void setUserId(User user) {
+    public void setUser(User user) {
         this.user = user;
     }
 
