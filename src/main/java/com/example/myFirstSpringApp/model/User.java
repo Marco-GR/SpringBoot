@@ -1,14 +1,11 @@
 package com.example.myFirstSpringApp.model;
 
-import com.example.myFirstSpringApp.util.DateAudit;
+import com.example.myFirstSpringApp.audit.DateAudit;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
-import javax.management.relation.Role;
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 @Entity
 @Table(name = "users")

@@ -5,21 +5,19 @@ import com.example.myFirstSpringApp.exception.BadRequestException;
 import com.example.myFirstSpringApp.model.Role;
 import com.example.myFirstSpringApp.model.User;
 import com.example.myFirstSpringApp.model.UserRole;
-import com.example.myFirstSpringApp.payload.ApiResponse;
-import com.example.myFirstSpringApp.payload.JwtAuthenticationResponse;
-import com.example.myFirstSpringApp.payload.LoginRequest;
-import com.example.myFirstSpringApp.payload.SignUpRequest;
+import com.example.myFirstSpringApp.payload.response.ApiResponse;
+import com.example.myFirstSpringApp.payload.response.JwtAuthenticationResponse;
+import com.example.myFirstSpringApp.payload.request.LoginRequest;
+import com.example.myFirstSpringApp.payload.request.SignUpRequest;
 import com.example.myFirstSpringApp.repository.RoleRepository;
 import com.example.myFirstSpringApp.repository.UserRepository;
-import static com.example.myFirstSpringApp.util.FieldsValidator.validateName;
-
-import static com.example.myFirstSpringApp.util.FieldsValidator.validatePassword;
 
 import com.example.myFirstSpringApp.repository.UserRoleRepository;
 import com.example.myFirstSpringApp.util.RoleName;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -29,8 +27,6 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.URI;
 import java.util.Optional;
-
-import static com.example.myFirstSpringApp.util.FieldsValidator.validateEmail;
 
 @Service
 public class AuthService {
@@ -55,12 +51,17 @@ public class AuthService {
 
     public JwtAuthenticationResponse logInUser(LoginRequest loginRequest) {
 
-        Authentication authentication = authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(
-                        loginRequest.getUsernameOrEmail(),
-                        loginRequest.getPassword()
-                )
-        );
+        Authentication authentication=null;
+        try{
+            authentication = authenticationManager.authenticate(
+                    new UsernamePasswordAuthenticationToken(
+                            loginRequest.getUsernameOrEmail(),
+                            loginRequest.getPassword()
+                    )
+            );
+        }catch (BadCredentialsException ex){
+            throw new BadRequestException("Username/email or password incorrect, please try again.");
+        }
 
         SecurityContextHolder.getContext().setAuthentication(authentication);
         String jwt = tokenProvider.generateToken(authentication);

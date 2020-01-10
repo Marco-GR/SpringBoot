@@ -1,8 +1,8 @@
 package com.example.myFirstSpringApp.controller;
 
-import com.example.myFirstSpringApp.payload.JwtAuthenticationResponse;
-import com.example.myFirstSpringApp.payload.LoginRequest;
-import com.example.myFirstSpringApp.payload.SignUpRequest;
+import com.example.myFirstSpringApp.payload.response.JwtAuthenticationResponse;
+import com.example.myFirstSpringApp.payload.request.LoginRequest;
+import com.example.myFirstSpringApp.payload.request.SignUpRequest;
 import com.example.myFirstSpringApp.service.AuthService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

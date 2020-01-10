@@ -1,4 +1,4 @@
-package com.example.myFirstSpringApp.payload;
+package com.example.myFirstSpringApp.payload.request;
 
 import javax.validation.constraints.NotBlank;
 
